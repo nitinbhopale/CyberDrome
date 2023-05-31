@@ -1,0 +1,260 @@
+.bg-gray {
+  background-color: #f0f2f5;
+}
+.fs-0 {
+  font-size: 4rem;
+}
+.fs-7 {
+  font-size: 0.8rem;
+}
+/* nav button */
+.nav__btn button:hover {
+  background: #f0f2f5 !important;
+}
+.nav__btn button:hover i {
+  color: #1b1b1b !important;
+}
+.nav__btn-active i {
+  color: #1b1b1b !important;
+}
+.nav__btn-active {
+  position: relative;
+}
+.nav__btn-active:before {
+  content: '';
+  position: absolute;
+  bottom: -4.5px;
+  left: 0;
+  transform: translate(0, 4.5px);
+  width: 100%;
+  height: 3px;
+  border-bottom: 3px solid #1b1b1b !important;
+}
+/* dropdown */
+.dropdown-item:active {
+  background-color: #d5d5d5 !important;
+}
+/* chat box */
+.modal-content:hover .fa-phone-alt {
+  color: #1b1b1b !important;
+}
+.modal-content:hover .fa-video {
+  color: #1b1b1b !important;
+}
+.modal-content:hover .fa-file-image {
+  color: #1b1b1b !important;
+}
+.modal-content:hover .fa-plus-circle {
+  color: #1b1b1b !important;
+}
+.modal-content:hover .fa-portrait {
+  color: #1b1b1b !important;
+}
+.modal-content:hover .fa-adjust {
+  color: #1b1b1b !important;
+}
+.modal-content:hover .fa-thumbs-up {
+  color: #1b1b1b !important;
+}
+/* edit */
+.edit-button {
+  opacity: 0;
+}
+.edit-button:hover {
+  opacity: 1;
+}
+.edit-heading:hover .edit-button {
+  opacity: 1;
+}
+/* scrollbar */
+.scrollbar:hover {
+  overflow: auto !important;
+}
+/* sponsor */
+.sponsor-icon {
+  opacity: 0;
+}
+.dropdown-item:hover .sponsor-icon {
+  opacity: 1;
+}
+/* popover */
+.pop-avatar {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+.chat-box {
+  border: 0 !important;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+/* stories */
+.story:hover {
+  opacity: 0.8;
+}
+.pointer {
+  cursor: pointer;
+}
+/* comment */
+.post__comment .accordion-button::after {
+  margin-left: 0 !important;
+  display: none !important;
+}
+.post__comment .accordion-button:hover {
+  background: transparent !important;
+  border-color: transparent !important;
+}
+.post__comment .accordion-button:not(.collapsed) {
+  background: transparent !important;
+}
+.post__comment .accordion-button:not(.collapsed) {
+  box-shadow: none !important;
+}
+@media (min-width: 62em) {
+  footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+}
+
+/* .dark-mode {
+  background-color: black;
+  color: white;
+} */
+
+/* Profile Page Css */
+.card-box {
+  padding: 20px;
+  border-radius: 3px;
+  margin-bottom: 30px;
+  background-color: #fff;
+}
+
+.social-links li a {
+  border-radius: 50%;
+  color: rgba(121, 121, 121, 0.8);
+  display: inline-block;
+  height: 30px;
+  line-height: 27px;
+  border: 2px solid rgba(121, 121, 121, 0.5);
+  text-align: center;
+  width: 30px;
+}
+
+.social-links li a:hover {
+  color: #797979;
+  border: 2px solid #797979;
+}
+.thumb-lg {
+  height: 88px;
+  width: 88px;
+}
+.img-thumbnail {
+  padding: 0.25rem;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 0.25rem;
+  max-width: 100%;
+  height: auto;
+}
+.text-pink {
+  color: #3b006b !important;
+}
+.btn-rounded {
+  border-radius: 2em;
+}
+.text-muted {
+  color: #98a6ad !important;
+}
+h4 {
+  line-height: 22px;
+  font-size: 18px;
+}
+/* Profile Page Css End */
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #0c131e;
+}
+
+/* logo */
+.logo {
+  height: 4rem;
+}
+
+.modal-dialog {
+  height: 50%;
+  width: 50%;
+  margin: auto;
+}
+
+.modal-header {
+  color: rgb(0, 0, 0);
+  background-color: #ffffff;
+}
+
+textarea {
+  border: none;
+  box-shadow: none !important;
+  -webkit-appearance: none;
+  outline: 0px !important;
+}
+
+.openmodal {
+  margin-left: 35%;
+  width: 25%;
+  margin-top: 25%;
+}
+
+/* .icon1 {
+  color: #007bff;
+}
+
+a {
+  margin: auto;
+}
+
+input {
+  color: #007bff;
+} */
+
+.addpostheading {
+  margin-top: 6rem;
+  margin-bottom: 2rem;
+}
+
+.nav-link {
+  color: #1b1b1b;
+  font-weight: 500;
+}
+
+.mypostgrid {
+  padding: 3rem;
+}
+
+.blogbody {
+  background-color: #ffffff;
+}
+
+.logincard {
+  background-color: #ffffff;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+body {
+  color: #222;
+  /* background-color: #fff; */
+}
+
+/* Dark theme colors */
+body.dark-theme {
+  color: #eee;
+  background-color: #3f3f3f;
+}
+
+body.dark-theme postcard {
+  background-color: #aa0d0d;
+}

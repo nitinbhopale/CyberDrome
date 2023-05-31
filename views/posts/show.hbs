@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{post.name}}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+      <!-- fontawesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/public/stylesheets/main.css">
+    <style>
+        body{
+            background-color: #F0F2F5;
+        }
+        .blogbody{
+            padding: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+  <div class="bg-white d-flex align-items-center fixed-top shadow" style="min-height: 56px; z-index: 5">
+    <div class="container-fluid">
+      <div class="row align-items-center">
+        <!-- search -->
+        <div class="col d-flex align-items-center">
+          <!-- logo -->
+          <div class="ms-2">
+            <img src="../public/img/CyberDome-logo.png" class="logo" alt="">
+          </div>
+        </div>
+        <!-- nav -->
+        <div class="col d-none d-xl-flex justify-content-center">
+          <ul class="nav nav-pills" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+            {{#if currentUser}}
+            <li class="nav-item active">
+                <a class="nav-link"  href="/user/{{currentUser.username}}">My Posts</a>
+            </li>
+            {{/if}}
+          </ul>
+        </div>
+
+
+        <!-- menus -->
+        <div class="col d-flex align-items-center justify-content-end">
+          {{!-- <!-- avatar -->
+            <div class="align-items-center justify-content-center d-none d-xl-flex">
+            <img src="https://source.unsplash.com/collection/happy-people" class="rounded-circle me-2" alt="avatar"
+              style="width: 38px; height: 38px; object-fit: cover" />
+            <p class="m-0">user</p>
+          </div> --}}
+          <nav class="navbar navbar-expand-lg">
+            <ul class="navbar-nav ml-auto">
+                {{#unless currentUser}}
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/register">Sign Up</a>
+                </li>
+                {{else}}
+                <li class="nav-item">
+                  <div class="align-items-center justify-content-center d-none d-xl-flex">
+                    <img src="https://source.unsplash.com/collection/happy-people" class="rounded-circle me-2" alt="avatar" style="width: 38px; height: 38px; object-fit: cover" />
+                    <p class="m-0"><a class="nav-link" href="/user/{{currentUser.username}}">{{currentUser.username}}</a></p>
+                  </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> LogOut</a>
+                </li>
+                {{/unless}}
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="container blogbody">
+        <div class="row">
+            <div class="col-md-3">
+                <h3>Author</h3>
+                <h4>{{post.author.username}}</h4>
+            </div>
+            <div class="col-md-9">
+                <div class="thumbnail">
+                    <img class="img-responsive" src="{{post.image}}" width="820" height="350">
+                    <div class="caption-full">
+                        <br><h3><a>{{post.name}}</a></h3><br>
+                        <p style="text-align: justify; text-justify: inter-word;">{{post.description}}</p>
+                        <p>
+                            <em>Submitted By <b>{{post.author.username}}</b></em>
+                        </p>
+                      {{#if currentUser}}
+                      <table>
+                        <tr>
+                          <td> <a class="btn btn-sm btn-outline-dark" href="/posts/{{post._id}}/edit">Edit</a></td>
+                          <td><form id="delete-form" action="/posts/{{post._id}}?_method=DELETE" method="POST">
+                            <button class="btn btn-sm btn-dark">Delete</button>
+                        </form></td>
+                        </tr>
+                      </table>
+                      {{/if}}
+                    </div>
+                </div>
+                <div class="well">
+                    <div class="text-right">
+                        <a class="btn btn-dark" href="/posts/{{post._id}}/comments/new">
+                            Add Comment
+                        </a>
+                    </div>
+                    <hr>
+                    {{#each post.comments}}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <strong>{{author.username}}</strong>
+                            <span class="float-right">Added Today</span>
+                            <p>
+                                {{text}}
+                            </p>
+
+                          {{#if currentUser}}
+                            <table>
+                              <tr>
+                                <td><a class="btn btn-sm btn-outline-dark" href="/posts/{{../post._id}}/comments/{{_id}}/edit">
+                                Edit </a></td>
+                                <td><form id="delete-form" action="/posts/{{../post._id}}/comments/{{_id}}?_method=DELETE"
+                                method="POST">
+                                <button class="btn btn-sm btn-dark">Delete</button>
+                            </form></td>
+                              </tr>
+                            </table>
+                          {{/if}}
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

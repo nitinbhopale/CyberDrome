@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Admin</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="../public/stylesheets/main.css">
+            <style>
+          body{
+            background-color: #F0F2F5;
+        }
+        </style>
+</head>
+
+<body>
+      <!-- ================= Appbar ================= -->
+  <div class="bg-white d-flex align-items-center fixed-top shadow" style="min-height: 56px; z-index: 5">
+    <div class="container-fluid">
+      <div class="row align-items-center">
+        <!-- search -->
+        <div class="col d-flex align-items-center">
+          <!-- logo -->
+          <div class="ms-2">
+            <a class="nav-link" href="/"><img src="../public/img/CyberDome-logo.png" class="logo" alt=""></a>
+          </div>
+        </div>
+        <!-- nav -->
+        <div class="col d-none d-xl-flex justify-content-center">
+          <ul class="nav nav-pills" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+            </li>
+          </ul>
+        </div>
+
+
+        <!-- menus -->
+        <div class="col d-flex align-items-center justify-content-end">
+          <nav class="navbar navbar-expand-lg">
+            <ul class="navbar-nav ml-auto">
+                
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+    <div class="container logincard">
+        <h1 style="text-align: center;">Cyberdome Admin - Login</h1>
+        <div style="width: 50%; margin: 25px auto;">
+            <form action="/adminlogin" method="POST">
+                <div class="form-group">
+                    <input class="form-control" type="text" name="username" placeholder="username" required>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="password" name="password" placeholder="password" required>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-lg btn-dark btn-block" type="submit">Login</button>
+                </div>
+            </form>
+            {{#if message}}
+            <h4 class="alert alert-danger">
+              {{message}}
+            </h4>
+            {{/if}}
+        </div>
+    </div>
+
+    <script>
+      // Example starter JavaScript for disabling form submissions if there are invalid fields
+(function () {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  var forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.prototype.slice.call(forms)
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+      }, false)
+    })
+})()
+    </script>
+</body>
+
+</html> 

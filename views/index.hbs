@@ -1,0 +1,905 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- fontawesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous" />
+<link rel="icon" type="image/x-icon" href="https://i.pinimg.com/736x/32/5b/61/325b616809b93c2edbe63bbd6ba6cf07.jpg">
+
+  <!-- main style -->
+  <link rel="stylesheet" href="../public/stylesheets/main.css" type="text/css">
+  <title>
+    Cyberdome
+  </title>
+</head>
+
+<body class="bg-gray postion-relative">
+  <!-- ================= Appbar ================= -->
+  <div class="bg-white d-flex align-items-center fixed-top shadow" style="min-height: 56px; z-index: 5">
+    <div class="container-fluid">
+      <div class="row align-items-center">
+        <!-- search -->
+        <div class="col d-flex align-items-center">
+          <!-- logo -->
+          <div class="ms-2">
+            <a href="/"><img src="../public/img/CyberDome-logo.png" class="logo" alt=""></a>
+          </div>
+        </div>
+        <!-- nav -->
+        <div class="col d-none d-xl-flex justify-content-center">
+          <ul class="nav nav-pills" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
+                type="button" role="tab" aria-controls="pills-home" aria-selected="true">Home</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
+                type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Q & A</button>
+            </li>
+            {{#if currentUser}}
+            <li class="nav-item active">
+                <a class="nav-link"  href="/user/{{currentUser.username}}">My Posts</a>
+            </li>
+            {{/if}}
+          </ul>
+        </div>
+
+
+        <!-- menus -->
+        <div class="col d-flex align-items-center justify-content-end">
+          {{!-- <!-- avatar -->
+            <div class="align-items-center justify-content-center d-none d-xl-flex">
+            <img src="https://source.unsplash.com/collection/happy-people" class="rounded-circle me-2" alt="avatar"
+              style="width: 38px; height: 38px; object-fit: cover" />
+            <p class="m-0">user</p>
+          </div> --}}
+          <nav class="navbar navbar-expand-lg">
+            <ul class="navbar-nav ml-auto">
+                {{#unless currentUser}}
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/register">Sign Up</a>
+                </li>
+                {{else}}
+                <li class="nav-item">
+                  <div class="align-items-center justify-content-center d-none d-xl-flex">
+                    <img src="https://source.unsplash.com/collection/happy-people" class="rounded-circle me-2" alt="avatar" style="width: 38px; height: 38px; object-fit: cover" />
+                    <p class="m-0"><a class="nav-link" href="/user/{{currentUser.username}}">{{currentUser.username}}</a></p>
+                  </div>
+                </li>
+                {{/unless}}
+            </ul>
+          </nav>
+          <!-- main menu dd -->
+          <ul class="dropdown-menu border-0 shadow p-3 overflow-auto" aria-labelledby="mainMenu"
+            style="width: 23em; max-height: 600px">
+          </ul>
+          <!-- secondary menu -->
+          <div class="
+                rounded-circle
+                p-1
+                bg-gray
+                d-flex
+                align-items-center
+                justify-content-center
+                mx-2
+              " style="width: 38px; height: 38px" type="button" id="secondMenu" data-bs-toggle="dropdown"
+            aria-expanded="false" data-bs-auto-close="outside">
+            <i class="fas fa-caret-down"></i>
+          </div>
+          <!-- secondary menu dd -->
+          <ul class="dropdown-menu border-0 shadow p-3" aria-labelledby="secondMenu" style="width: 23em">
+            <!-- avatar -->
+            {{#if currentUser}}
+            <li class="dropdown-item p-1 rounded d-flex" type="button">
+              <img src="https://source.unsplash.com/collection/happy-people" alt="avatar" class="rounded-circle me-2"
+                style="width: 45px; height: 45px; object-fit: cover" />
+              
+              <div>
+                <p class="m-0 username">{{currentUser.username}}</p>
+                <p class="m-0 text-muted"><a href="#profilemodal" data-bs-toggle="modal" data-bs-target="#profilemodal">See your profile</a></p>
+              </div>
+            </li>
+            <hr />
+            {{/if}}
+            <!-- feedback -->
+            <li>
+              <div class="col d-sm-flex justify-content-center">
+                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
+                      data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
+                      aria-selected="true">Home</button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
+                      data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
+                      aria-selected="false">Q & A</button>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            {{#if currentUser}}
+            <li class="dropdown-item p-1 rounded d-flex align-items-center" type="button">
+              <i class="fas fa-paper-plane"></i>
+              <div class="ms-3">
+                <p class="m-0"><a href="/feedback">Give Feedback</a></p>
+                <p class="m-0 text-muted fs-7">
+                  Help us improve cyberdome.
+                </p>
+              </div>
+            </li>
+            
+            <li class="dropdown-item p-1 rounded d-flex align-items-center" type="button">
+              <i class="fa-solid fa-arrow-right-from-bracket"></i>
+              <div class="ms-3">
+                <p class="m-0"><a href="/logout">Logout</a></p>
+                <p class="m-0 text-muted fs-7">
+                  log out from cyberdome.
+                </p>
+              </div>
+            </li>
+            {{/if}}
+          </ul>
+          <!-- end -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= Main ================= -->
+  <div class="container-fluid">
+    <div class="row justify-content-evenly">
+      <!-- ================= Sidebar ================= -->
+      <div class="col-12 col-lg-3">
+
+      </div>
+      <!-- ================= Timeline ================= -->
+      <div class="col-12 col-lg-6 pb-5">
+        <div class="d-flex flex-column justify-content-center w-100 mx-auto"
+          style="padding-top: 56px; max-width: 680px">
+          <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+
+              <!-- create post -->
+              {{#if currentUser}}
+              <div class="bg-white p-3 mt-3 rounded border shadow">
+                <!-- avatar -->
+                <div class="d-flex" type="button">
+                  <div class="p-1">
+                    <img src="https://source.unsplash.com/collection/happy-people" alt="avatar"
+                      class="rounded-circle me-2" style="width: 38px; height: 38px; object-fit: cover" />
+                  </div>
+                  <input type="text" class="form-control rounded-pill border-0 bg-gray pointer"
+                    placeholder="What's on your mind, {{currentUser.username}}?" onclick="window.location.href='/posts/publish'"/>
+                </div>
+                {{!-- <a class="btn btn-primary btn-large" href="/posts/publish">Add a new post</a> --}}
+                <!-- create modal -->
+              </div>
+              {{/if}}
+
+              <!-- posts -->
+              <!-- post1 -->
+              {{#each posts}}
+              <div class="bg-white p-4 rounded shadow mt-3 postcard">
+                <!-- author -->
+                <div class="d-flex justify-content-between">
+                  <!-- avatar -->
+                  <div class="d-flex">
+                    <img src="https://source.unsplash.com/collection/happy-people" alt="avatar"
+                      class="rounded-circle me-2" style="width: 38px; height: 38px; object-fit: cover" />
+                    <div>
+                      <p class="m-0 fw-bold">{{this.author.username}}</p>
+                      {{!-- <span class="text-muted fs-7">July 17 at 1:23 pm</span> --}}
+                    </div>
+                  </div>
+                </div>
+                <!-- post content -->
+                <div class="mt-3">
+                  <!-- content -->
+                  <div>
+                    <h4>
+                     {{this.name}}
+                    </h4>
+                    <p>
+                    {{!-- <p>
+                      {{this.description}}
+                    </p> --}}
+                    <p>
+                      <a href="/posts/{{this._id}}">Read More</a>
+                    </p>
+                    <img src="{{this.image}}" alt="post image" style="width: 700px; height: 300px; object-fit: cover" class="img-fluid rounded" />
+                  </div>  
+                  <!-- likes & comments -->
+                </div>
+              </div>
+              {{/each}}
+
+            </div>
+            <br>
+            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+              <!-- Post Question Section -->
+              <div class="bg-white p-3 mt-3 rounded border shadow">
+                <!-- avatar -->
+                <div class="d-flex" type="button">
+                  <div class="p-1">
+                    <img src="https://source.unsplash.com/collection/happy-people" alt="avatar"
+                      class="rounded-circle me-2" style="width: 38px; height: 38px; object-fit: cover" />
+                  </div>
+                  <!-- <input type="text" class="form-control rounded-pill border-0 bg-gray pointer"
+                    placeholder="What's on your mind, Post Here?" /> -->
+                  <form action="/auth/postque" method="post" class="input-group mb-3">
+                      <input type="text"  name="postque" class="form-control rounded-pill border-0 bg-gray p-2"
+                      placeholder="What's on your mind ?, Post Here" aria-label="Recipient's username"
+                      aria-describedby="button-addon2">
+                      <div class="input-group-append">
+                        <button class="btn btn-dark rounded-pill" type="submit" id="button-addon2">Post
+                        Que</button>
+                      </div>
+                  </form>
+                </div>
+              </div>
+              <!-- Qestion 1 -->
+              <div class="bg-white p-4 rounded shadow mt-3">
+                <!-- author -->
+                <div class="d-flex justify-content-between">
+                  <!-- avatar -->
+                  <div class="d-flex">
+                    <img src="https://source.unsplash.com/collection/happy-people" alt="avatar"
+                      class="rounded-circle me-2" style="width: 38px; height: 38px; object-fit: cover" />
+                    <div>
+                      <p class="m-0 fw-bold">Kunal Narkhede</p>
+                      <span class="text-muted fs-7">23 April 2023 at 1:23 pm</span>
+                    </div>
+                  </div>
+                  <!-- edit -->
+                  <i class="fas fa-ellipsis-h" type="button" id="post1Menu" data-bs-toggle="dropdown"
+                    aria-expanded="false"></i>
+                  <!-- edit menu -->
+                  <ul class="dropdown-menu border-0 shadow" aria-labelledby="post1Menu">
+                    <li class="d-flex align-items-center">
+                      <a class="
+                                      dropdown-item
+                                      d-flex
+                                      justify-content-around
+                                      align-items-center
+                                      fs-7
+                                    " href="#">
+                        Edit Question</a>
+                    </li>
+                    <li class="d-flex align-items-center">
+                      <a class="
+                                      dropdown-item
+                                      d-flex
+                                      justify-content-around
+                                      align-items-center
+                                      fs-7
+                                    " href="#">
+                        Delete Question</a>
+                    </li>
+                  </ul>
+                </div>
+                <!-- post content -->
+                <div class="mt-3">
+                  <!-- content -->
+                  <div>
+                    <p>
+                      What is Node.js ? Detail Description 
+                    </p>
+                    <!-- <img src="https://source.unsplash.com/random/12" alt="post image" class="img-fluid rounded" /> -->
+                  </div>
+                  <!-- likes & comments -->
+                  <div class="post__comment mt-3 position-relative">
+                    <!-- comments start-->
+                    <div class="accordion" id="accordionExample">
+                      <div class="accordion-item border-0">
+                        <!-- comment collapse -->
+                        <h2 class="accordion-header" id="headingTwo">
+                          <div class="
+                                          accordion-button
+                                          collapsed
+                                          pointer
+                                          d-flex
+                                          justify-content-end
+                                        " data-bs-toggle="collapse" data-bs-target="#collapsePost1"
+                            aria-expanded="false" aria-controls="collapsePost1">
+                            <p class="m-0">2 Answers</p>
+                          </div>
+                        </h2>
+                        <hr />
+                        <!-- comment & like bar -->
+                        <div class="d-flex justify-content-around">
+                          <div class="
+                                          dropdown-item
+                                          rounded
+                                          d-flex
+                                          justify-content-center
+                                          align-items-center
+                                          pointer
+                                          text-muted
+                                          p-1
+                                        ">
+                            <i class="fas fa-thumbs-up me-3"></i>
+                            <p class="m-0">Like</p>
+                          </div>
+                          <div class="
+                                          dropdown-item
+                                          rounded
+                                          d-flex
+                                          justify-content-center
+                                          align-items-center
+                                          pointer
+                                          text-muted
+                                          p-1
+                                        " data-bs-toggle="collapse" data-bs-target="#collapsePost1"
+                            aria-expanded="false" aria-controls="collapsePost1">
+                            <i class="fas fa-comment-alt me-3"></i>
+                            <p class="m-0">Answers</p>
+                          </div>
+                        </div>
+                        <!-- comment expand -->
+                        <div id="collapsePost1" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                          data-bs-parent="#accordionExample">
+                          <hr />
+                          <div class="accordion-body">
+                            <!-- comment 1 -->
+                            <div class="d-flex align-items-center my-1">
+                              <!-- avatar -->
+                              <img src="https://source.unsplash.com/collection/happy-people" alt="avatar"
+                                class="rounded-circle me-2" style="
+                                              width: 38px;
+                                              height: 38px;
+                                              object-fit: cover;
+                                            " />
+                              <!-- comment text -->
+                              <div class="p-3 rounded comment__input w-100">
+                                <!-- comment menu of author -->
+                                <div class="d-flex justify-content-end">
+                                  <!-- icon -->
+                                  <i class="fas fa-ellipsis-h text-blue pointer" id="post1CommentMenuButton"
+                                    data-bs-toggle="dropdown" aria-expanded="false"></i>
+                                  <!-- menu -->
+                                  <ul class="dropdown-menu border-0 shadow" aria-labelledby="post1CommentMenuButton">
+                                    <li class="d-flex align-items-center">
+                                      <a class="
+                                                      dropdown-item
+                                                      d-flex
+                                                      justify-content-around
+                                                      align-items-center
+                                                      fs-7
+                                                    " href="#">
+                                        Edit Comment</a>
+                                    </li>
+                                    <li class="d-flex align-items-center">
+                                      <a class="
+                                                      dropdown-item
+                                                      d-flex
+                                                      justify-content-around
+                                                      align-items-center
+                                                      fs-7
+                                                    " href="#">
+                                        Delete Comment</a>
+                                    </li>
+                                  </ul>
+                                </div>
+                                <p class="fw-bold m-0">Mokshada Bhandare</p>
+                                <p class="m-0 fs-7 bg-gray p-2 rounded">
+                                  Node.js is a cross-platform, open-source server environment 
+                                  that can run on Windows, Linux, Unix, macOS, and more. 
+                                  Node.js is a back-end JavaScript runtime environment, runs on
+                                 the V8 JavaScript Engine, and executes JavaScript code outside a web browser
+                                </p>
+                              </div>
+                            </div>
+                            <!-- comment 2 -->
+                            <div class="d-flex align-items-center my-1">
+                              <!-- avatar -->
+                              <img src="https://source.unsplash.com/random/2" alt="avatar" class="rounded-circle me-2"
+                                style="
+                                              width: 38px;
+                                              height: 38px;
+                                              object-fit: cover;
+                                            " />
+                              <!-- comment text -->
+                              <div class="p-3 rounded comment__input w-100">
+                                <p class="fw-bold m-0">Shashikant Yadav</p>
+                                <p class="m-0 fs-7 bg-gray p-2 rounded">
+                                  As an asynchronous event-driven JavaScript runtime,
+                                   Node.js is designed to build scalable network applications. 
+                                </p>
+                              </div>
+                            </div>
+                            <!-- create comment -->
+                            <form class="d-flex my-1">
+                              <!-- avatar -->
+                              <div>
+                                <img src="https://source.unsplash.com/collection/happy-people" alt="avatar"
+                                  class="rounded-circle me-2" style="
+                                                width: 38px;
+                                                height: 38px;
+                                                object-fit: cover;
+                                              " />
+                              </div>
+                              <!-- input -->
+                              <input type="text" class="form-control border-0 rounded-pill bg-gray"
+                                placeholder="Write a comment" />
+                            </form>
+                            <!-- end -->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- end -->
+                  </div>
+                </div>
+              </div>
+              <!-- Qestion 2 -->
+              <div class="bg-white p-4 rounded shadow mt-3">
+                <!-- author -->
+                <div class="d-flex justify-content-between">
+                  <!-- avatar -->
+                  <div class="d-flex">
+                    <img src="https://source.unsplash.com/collection/happy-people" alt="avatar"
+                      class="rounded-circle me-2" style="width: 38px; height: 38px; object-fit: cover" />
+                    <div>
+                      <p class="m-0 fw-bold">Rutuja Shelke</p>
+                      <span class="text-muted fs-7">15 May 2023 at 6:30 pm</span>
+                    </div>
+                  </div>
+                  <!-- edit -->
+                  <i class="fas fa-ellipsis-h" type="button" id="post1Menu" data-bs-toggle="dropdown"
+                    aria-expanded="false"></i>
+                  <!-- edit menu -->
+                  <ul class="dropdown-menu border-0 shadow" aria-labelledby="post1Menu">
+                    <li class="d-flex align-items-center">
+                      <a class="
+                                      dropdown-item
+                                      d-flex
+                                      justify-content-around
+                                      align-items-center
+                                      fs-7
+                                    " href="#">
+                        Edit Question</a>
+                    </li>
+                    <li class="d-flex align-items-center">
+                      <a class="
+                                      dropdown-item
+                                      d-flex
+                                      justify-content-around
+                                      align-items-center
+                                      fs-7
+                                    " href="#">
+                        Delete Question</a>
+                    </li>
+                  </ul>
+                </div>
+                <!-- post content -->
+                <div class="mt-3">
+                  <!-- content -->
+                  <div>
+                    <p>
+                      Client Side Frameworks and Librabries ? 
+                    </p>
+                    <!-- <img src="https://source.unsplash.com/random/12" alt="post image" class="img-fluid rounded" /> -->
+                  </div>
+                  <!-- likes & comments -->
+                  <div class="post__comment mt-3 position-relative">
+                    <!-- comments start-->
+                    <div class="accordion" id="accordionExample">
+                      <div class="accordion-item border-0">
+                        <!-- comment collapse -->
+                        <h2 class="accordion-header" id="headingTwo">
+                          <div class="
+                                          accordion-button
+                                          collapsed
+                                          pointer
+                                          d-flex
+                                          justify-content-end
+                                        " data-bs-toggle="collapse" data-bs-target="#collapsePost1"
+                            aria-expanded="false" aria-controls="collapsePost1">
+                            <p class="m-0">2 Answers</p>
+                          </div>
+                        </h2>
+                        <hr />
+                        <!-- comment & like bar -->
+                        <div class="d-flex justify-content-around">
+                          <div class="
+                                          dropdown-item
+                                          rounded
+                                          d-flex
+                                          justify-content-center
+                                          align-items-center
+                                          pointer
+                                          text-muted
+                                          p-1
+                                        ">
+                            <i class="fas fa-thumbs-up me-3"></i>
+                            <p class="m-0">Like</p>
+                          </div>
+                          <div class="
+                                          dropdown-item
+                                          rounded
+                                          d-flex
+                                          justify-content-center
+                                          align-items-center
+                                          pointer
+                                          text-muted
+                                          p-1
+                                        " data-bs-toggle="collapse" data-bs-target="#collapsePost1"
+                            aria-expanded="false" aria-controls="collapsePost1">
+                            <i class="fas fa-comment-alt me-3"></i>
+                            <p class="m-0">Answers</p>
+                          </div>
+                        </div>
+                        <!-- comment expand -->
+                        <div id="collapsePost1" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                          data-bs-parent="#accordionExample">
+                          <hr />
+                          <div class="accordion-body">
+                            <!-- comment 1 -->
+                            <div class="d-flex align-items-center my-1">
+                              <!-- avatar -->
+                              <img src="https://source.unsplash.com/collection/happy-people" alt="avatar"
+                                class="rounded-circle me-2" style="
+                                              width: 38px;
+                                              height: 38px;
+                                              object-fit: cover;
+                                            " />
+                              <!-- comment text -->
+                              <div class="p-3 rounded comment__input w-100">
+                                <!-- comment menu of author -->
+                                <div class="d-flex justify-content-end">
+                                  <!-- icon -->
+                                  <i class="fas fa-ellipsis-h text-blue pointer" id="post1CommentMenuButton"
+                                    data-bs-toggle="dropdown" aria-expanded="false"></i>
+                                  <!-- menu -->
+                                  <ul class="dropdown-menu border-0 shadow" aria-labelledby="post1CommentMenuButton">
+                                    <li class="d-flex align-items-center">
+                                      <a class="
+                                                      dropdown-item
+                                                      d-flex
+                                                      justify-content-around
+                                                      align-items-center
+                                                      fs-7
+                                                    " href="#">
+                                        Edit Comment</a>
+                                    </li>
+                                    <li class="d-flex align-items-center">
+                                      <a class="
+                                                      dropdown-item
+                                                      d-flex
+                                                      justify-content-around
+                                                      align-items-center
+                                                      fs-7
+                                                    " href="#">
+                                        Delete Comment</a>
+                                    </li>
+                                  </ul>
+                                </div>
+                                <p class="fw-bold m-0">Rohan Chinchwade</p>
+                                <p class="m-0 fs-7 bg-gray p-2 rounded">
+                                  Bootstrap, React , Angular
+                                </p>
+                              </div>
+                            </div>
+                            <!-- comment 2 -->
+                            <div class="d-flex align-items-center my-1">
+                              <!-- avatar -->
+                              <img src="https://source.unsplash.com/random/2" alt="avatar" class="rounded-circle me-2"
+                                style="
+                                              width: 38px;
+                                              height: 38px;
+                                              object-fit: cover;
+                                            " />
+                              <!-- comment text -->
+                              <div class="p-3 rounded comment__input w-100">
+                                <p class="fw-bold m-0">Shilpa Dash</p>
+                                <p class="m-0 fs-7 bg-gray p-2 rounded">
+                                  Vue.js, jQuery
+                                </p>
+                              </div>
+                            </div>
+                            <!-- create comment -->
+                            <form class="d-flex my-1">
+                              <!-- avatar -->
+                              <div>
+                                <img src="https://source.unsplash.com/collection/happy-people" alt="avatar"
+                                  class="rounded-circle me-2" style="
+                                                width: 38px;
+                                                height: 38px;
+                                                object-fit: cover;
+                                              " />
+                              </div>
+                              <!-- input -->
+                              <input type="text" class="form-control border-0 rounded-pill bg-gray"
+                                placeholder="Write a comment" />
+                            </form>
+                            <!-- end -->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- end -->
+                  </div>
+                </div>
+              </div>
+              <!-- Qestion 3 -->
+              <div class="bg-white p-4 rounded shadow mt-3">
+                <!-- author -->
+                <div class="d-flex justify-content-between">
+                  <!-- avatar -->
+                  <div class="d-flex">
+                    <img src="https://source.unsplash.com/collection/happy-people" alt="avatar"
+                      class="rounded-circle me-2" style="width: 38px; height: 38px; object-fit: cover" />
+                    <div>
+                      <p class="m-0 fw-bold">Rushikesh Narkhede</p>
+                      <span class="text-muted fs-7">12 March 2023 at 8:65 pm</span>
+                    </div>
+                  </div>
+                  <!-- edit -->
+                  <i class="fas fa-ellipsis-h" type="button" id="post1Menu" data-bs-toggle="dropdown"
+                    aria-expanded="false"></i>
+                  <!-- edit menu -->
+                  <ul class="dropdown-menu border-0 shadow" aria-labelledby="post1Menu">
+                    <li class="d-flex align-items-center">
+                      <a class="
+                                      dropdown-item
+                                      d-flex
+                                      justify-content-around
+                                      align-items-center
+                                      fs-7
+                                    " href="#">
+                        Edit Question</a>
+                    </li>
+                    <li class="d-flex align-items-center">
+                      <a class="
+                                      dropdown-item
+                                      d-flex
+                                      justify-content-around
+                                      align-items-center
+                                      fs-7
+                                    " href="#">
+                        Delete Question</a>
+                    </li>
+                  </ul>
+                </div>
+                <!-- post content -->
+                <div class="mt-3">
+                  <!-- content -->
+                  <div>
+                    <p>
+                      What is an anonymous function ?
+                    </p>
+                    <!-- <img src="https://source.unsplash.com/random/12" alt="post image" class="img-fluid rounded" /> -->
+                  </div>
+                  <!-- likes & comments -->
+                  <div class="post__comment mt-3 position-relative">
+                    <!-- comments start-->
+                    <div class="accordion" id="accordionExample">
+                      <div class="accordion-item border-0">
+                        <!-- comment collapse -->
+                        <h2 class="accordion-header" id="headingTwo">
+                          <div class="
+                                          accordion-button
+                                          collapsed
+                                          pointer
+                                          d-flex
+                                          justify-content-end
+                                        " data-bs-toggle="collapse" data-bs-target="#collapsePost1"
+                            aria-expanded="false" aria-controls="collapsePost1">
+                            <p class="m-0">2 Answers</p>
+                          </div>
+                        </h2>
+                        <hr />
+                        <!-- comment & like bar -->
+                        <div class="d-flex justify-content-around">
+                          <div class="
+                                          dropdown-item
+                                          rounded
+                                          d-flex
+                                          justify-content-center
+                                          align-items-center
+                                          pointer
+                                          text-muted
+                                          p-1
+                                        ">
+                            <i class="fas fa-thumbs-up me-3"></i>
+                            <p class="m-0">Like</p>
+                          </div>
+                          <div class="
+                                          dropdown-item
+                                          rounded
+                                          d-flex
+                                          justify-content-center
+                                          align-items-center
+                                          pointer
+                                          text-muted
+                                          p-1
+                                        " data-bs-toggle="collapse" data-bs-target="#collapsePost1"
+                            aria-expanded="false" aria-controls="collapsePost1">
+                            <i class="fas fa-comment-alt me-3"></i>
+                            <p class="m-0">Answers</p>
+                          </div>
+                        </div>
+                        <!-- comment expand -->
+                        <div id="collapsePost1" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                          data-bs-parent="#accordionExample">
+                          <hr />
+                          <div class="accordion-body">
+                            <!-- comment 1 -->
+                            <div class="d-flex align-items-center my-1">
+                              <!-- avatar -->
+                              <img src="https://source.unsplash.com/collection/happy-people" alt="avatar"
+                                class="rounded-circle me-2" style="
+                                              width: 38px;
+                                              height: 38px;
+                                              object-fit: cover;
+                                            " />
+                              <!-- comment text -->
+                              <div class="p-3 rounded comment__input w-100">
+                                <!-- comment menu of author -->
+                                <div class="d-flex justify-content-end">
+                                  <!-- icon -->
+                                  <i class="fas fa-ellipsis-h text-blue pointer" id="post1CommentMenuButton"
+                                    data-bs-toggle="dropdown" aria-expanded="false"></i>
+                                  <!-- menu -->
+                                  <ul class="dropdown-menu border-0 shadow" aria-labelledby="post1CommentMenuButton">
+                                    <li class="d-flex align-items-center">
+                                      <a class="
+                                                      dropdown-item
+                                                      d-flex
+                                                      justify-content-around
+                                                      align-items-center
+                                                      fs-7
+                                                    " href="#">
+                                        Edit Comment</a>
+                                    </li>
+                                    <li class="d-flex align-items-center">
+                                      <a class="
+                                                      dropdown-item
+                                                      d-flex
+                                                      justify-content-around
+                                                      align-items-center
+                                                      fs-7
+                                                    " href="#">
+                                        Delete Comment</a>
+                                    </li>
+                                  </ul>
+                                </div>
+                                <p class="fw-bold m-0">Sakshi Patil</p>
+                                <p class="m-0 fs-7 bg-gray p-2 rounded">
+                                  Anonymous function is a function define as not bound to an identifier. 
+                                  Because,These are a form of nested function in allowing access to variables 
+                                  in the scope of the containing function (non-local functions). 
+                                </p>
+                              </div>
+                            </div>
+                            <!-- comment 2 -->
+                            <div class="d-flex align-items-center my-1">
+                              <!-- avatar -->
+                              <img src="https://source.unsplash.com/random/2" alt="avatar" class="rounded-circle me-2"
+                                style="
+                                              width: 38px;
+                                              height: 38px;
+                                              object-fit: cover;
+                                            " />
+                              <!-- comment text -->
+                              <div class="p-3 rounded comment__input w-100">
+                                <p class="fw-bold m-0">Dipak Jadhav</p>
+                                <p class="m-0 fs-7 bg-gray p-2 rounded">
+                                   Lambda Expressions are anonymous functions. 
+                                   These functions do not need a name or a class to be used.
+                                </p>
+                              </div>
+                            </div>
+                            <!-- create comment -->
+                            <form class="d-flex my-1">
+                              <!-- avatar -->
+                              <div>
+                                <img src="https://source.unsplash.com/collection/happy-people" alt="avatar"
+                                  class="rounded-circle me-2" style="
+                                                width: 38px;
+                                                height: 38px;
+                                                object-fit: cover;
+                                              " />
+                              </div>
+                              <!-- input -->
+                              <input type="text" class="form-control border-0 rounded-pill bg-gray"
+                                placeholder="Write a comment" />
+                            </form>
+                            <!-- end -->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- end -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ================= Chatbar ================= -->
+      <div class="col-12 col-lg-3">
+
+      </div>
+    </div>
+  </div>
+
+ <!-- ================= Profie Modal Start ================= -->
+<!-- Button trigger modal -->
+
+<!-- Modal -->
+<div class="modal fade" id="profilemodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="profilemodal">Profile</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center card-box">
+                    <div class="member-card pt-2 pb-2">
+                        <div class="thumb-lg member-thumb mx-auto mb-4"><img src="https://source.unsplash.com/collection/happy-people" alt="avatar" class="rounded-circle me-2"
+                style="width: 100px; height: 100px; object-fit: cover" /></div>
+                        <div class="">
+                            <h4>{{currentUser.username}}</h4>
+                            <p class="text-muted">@Founder <span>| </span><span><a href="#" class="text-pink">websitename.com</a></span></p>
+                        </div>
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quae fuga incidunt consequatur tenetur doloremque officia corrupti provident tempore vitae labore</p>
+                        <ul class="social-links list-inline">
+                            <li class="list-inline-item"><i class="fa-brands fa-facebook"></i></li>
+                            <li class="list-inline-item"><i class="fa-brands fa-twitter"></i></li>
+                            <li class="list-inline-item"><i class="fa-brands fa-instagram"></i></li>
+                            <li class="list-inline-item"><i class="fa-brands fa-linkedin"></i></li>
+                        </ul>
+                        {{!-- <button type="button" class="btn btn-dark mt-3 btn-rounded waves-effect w-md waves-light">Edit Profile</button> --}}
+                    </div>
+      </div>
+      {{!-- <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div> --}}
+    </div>
+  </div>
+</div>
+
+
+ <!-- ================= Profie Modal End ================= -->
+
+{{!-- Welcome Modal --}}
+
+
+{{!-- Welcome Modal --}}
+
+  <!-- ================= Chat Icon ================= -->
+  {{!-- <div class="fixed-bottom right-100 p-3" style="z-index: 6; left: initial" type="button" data-bs-toggle="modal" data-bs-target="#createModal">
+    <i class="fas fa-edit bg-white rounded-circle p-3 shadow"></i>
+  </div> --}}
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+    crossorigin="anonymous"></script>
+  
+  <script>
+    // popover
+    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+    return new bootstrap.Popover(popoverTriggerEl);
+    });
+
+  </script>
+</body>
+
+</html>
